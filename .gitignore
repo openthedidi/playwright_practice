@@ -56,3 +56,6 @@ logs/
 # Test artifacts
 screenshots/
 report.html
+
+# Playwright files
+.playwright-mcp/
