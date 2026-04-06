@@ -28,3 +28,22 @@ def test_select_with_option_label(page: Page):
     # print選項名稱
     for option in coutry_options.all():
         print(option.text_content())
+
+
+def test_hidden_selection_options(page: Page):
+    page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+    page.get_by_placeholder("Username").fill("Admin")
+    page.get_by_placeholder("Password").fill("admin123")
+    page.get_by_role("button", name="Login").click()
+
+    page.get_by_text("PIM").click()
+
+    employment_status_selector_btn = page.locator(
+        "div.oxd-select-text--after").nth(0)
+    expect(employment_status_selector_btn).to_be_visible()
+    employment_status_selector_btn.click()
+
+    option_freelance = page.get_by_role("listbox").get_by_text("Freelance")
+    option_freelance.click()
+    expect(page.locator("div.oxd-select-text-input").nth(0)
+           ).to_have_text("Freelance")
